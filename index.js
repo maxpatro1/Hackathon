@@ -1,4 +1,3 @@
-const path = require('path');
 const args = process.argv;
 const imagemagick = require('imagemagick');
 
@@ -55,7 +54,7 @@ function resizeImage(){
         dstPath: data.path,
         width: data.width,
         height: data.height,
-    }, function(err, stdout, stderr){
+    }, function(err){
         if (err) throw err;
         imagemagick.identify('./assets/pp.jpg', function(err, output){
             if (err) throw err;
