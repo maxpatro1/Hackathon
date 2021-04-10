@@ -1,22 +1,27 @@
 const path = require('path');
-const args = process.argv
+const args = process.argv;
 const imagemagick = require('imagemagick');
 
+if (args.length === 7){
+    resizeImage()
+}else{
+    getCoordinates()
+}
 
-imagemagick.readMetadata('./assets/imgg.jpeg', function(err, metadata) {
-    if (err) throw err;
-    if (metadata.exif !== undefined && args.length !== 7){
-        let long = metadata.exif.gpsLatitude;
-        let lat = metadata.exif.gpsLongitude;
-        console.log('lon: ' + transformer(long));
-        console.log('lat: ' + transformer(lat));
-    }
-    else if (args.length === 7){
-        resizeImage()
-    }else {
-        console.log('Неверные данные')
-    }
-})
+
+function getCoordinates(){
+    imagemagick.readMetadata('./assets/imgg.jpeg', function(err, metadata) {
+        if (err) throw err;
+        if (metadata.exif !== undefined && args.length !== 7){
+            let long = metadata.exif.gpsLatitude;
+            let lat = metadata.exif.gpsLongitude;
+            console.log('lon: ' + transformer(long));
+            console.log('lat: ' + transformer(lat));
+        }else {
+            console.log('Данных нет')
+        }
+    })
+}
 
 
 function transformer(coordinate){
@@ -58,3 +63,7 @@ function resizeImage(){
         });
     });
 }
+//TODO: findContry():
+// function findCountry(long,lat){
+
+// }
